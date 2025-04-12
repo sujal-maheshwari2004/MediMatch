@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
 
 import errorHandler from "./middlewares/errorHandler";
 import authRoutes from "./routes/authRoutes";
@@ -11,6 +12,7 @@ const app = express();
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 app.use(cookieParser());
 
 // routes
