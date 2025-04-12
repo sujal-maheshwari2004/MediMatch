@@ -1,0 +1,77 @@
+{
+    "heart": {
+        "age": {
+            "question": "What is the patient's age?",
+            "unit": "years"
+        },
+        "gender": {
+            "question": "What is the patient's gender?",
+            "options": ["Male", "Female", "Other"]
+        },
+        "bp": {
+            "question": "What is the patient's blood pressure?",
+            "unit": "mmHg",
+            "note": "Format: systolic/diastolic (e.g., 120/80)"
+        },
+        "heart_attack": {
+            "question": "Has the patient ever had a heart attack?",
+            "options": ["Yes", "No"]
+        },
+        "heart_valve": {
+            "question": "Does the patient have any heart valve problems?",
+            "options": ["Yes", "No"]
+        },
+        "heart_defect": {
+            "question": "Was the patient born with any heart defects?",
+            "options": ["Yes", "No"]
+        },
+        "cardiomyopathy": {
+            "question": "Has the patient been diagnosed with cardiomyopathy?",
+            "options": ["Yes", "No"]
+        }
+    },
+    "liver": {
+        "age": {
+            "question": "What is the patient's age?",
+            "unit": "years"
+        },
+        "gender": {
+            "question": "What is the patient's gender?",
+            "options": ["Male", "Female", "Other"]
+        },
+        "bilirubin": {
+            "question": "What is the patient's bilirubin level?",
+            "unit": "mg/dL"
+        },
+        "albumin": {
+            "question": "What is the patient's albumin level?",
+            "unit": "g/dL"
+        },
+        "inr": {
+            "question": "What is the patient's INR (International Normalized Ratio)?",
+            "unit": "ratio"
+        }
+    },
+    "kidney": {
+        "age": {
+            "question": "What is the patient's age?",
+            "unit": "years"
+        },
+        "gender": {
+            "question": "What is the patient's gender?",
+            "options": ["Male", "Female", "Other"]
+        },
+        "creatinine": {
+            "question": "What is the patient's creatinine level?",
+            "unit": "mg/dL"
+        },
+        "gfr": {
+            "question": "What is the patient's GFR (Glomerular Filtration Rate)?",
+            "unit": "mL/min/1.73m²"
+        },
+        "dialysis": {
+            "question": "Is the patient on dialysis?",
+            "options": ["Yes", "No"]
+        }
+    }
+}
