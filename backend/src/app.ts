@@ -6,6 +6,7 @@ import errorHandler from "./middlewares/errorHandler";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import doctorRoutes from "./routes/doctorRoutes";
+import adminRoutes from "./routes/adminRoutes";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/doctor", doctorRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 // error handling middleware
 app.use(errorHandler);
