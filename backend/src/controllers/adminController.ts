@@ -7,6 +7,32 @@ import Admin from "../models/admins";
 import AppError from "../utils/AppError";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 
+export async function getAdminDetails(
+  req: AuthenticatedRequest,
+  res: Response
+) {
+  try {
+    const adminEmail = req.user?.email;
+
+    const admin = await Admin.findOne({ email: adminEmail }).select(
+      "-password -_id -__v"
+    );
+
+    if (!admin) {
+      throw new AppError("Admin not found", 404);
+    }
+
+    res.status(200).json({
+      success: true,
+      data: admin,
+    });
+    return;
+  } catch (error) {
+    console.error("Error fetching admin details:", error);
+    throw new AppError("Error fetching admin details", 500);
+  }
+}
+
 export const getNewRegistrations = async (req: Request, res: Response) => {
   try {
     const unverifiedUsers = await User.find({ isVerified: false }).select(
@@ -92,4 +118,4 @@ export async function updateVerification(
     console.error("Error updating verification:", error);
     throw new AppError("Error updating verification", 500);
   }
-};
+}
