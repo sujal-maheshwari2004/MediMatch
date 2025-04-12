@@ -1,15 +1,18 @@
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
 
 import errorHandler from "./middlewares/errorHandler";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
+import doctorRoutes from "./routes/doctorRoutes";
 
 const app = express();
 
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 app.use(cookieParser());
 
 // routes
@@ -20,6 +23,8 @@ app.get("/", (req: Request, res: Response) => {
 // routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/doctor", doctorRoutes);
+
 // error handling middleware
 app.use(errorHandler);
 
