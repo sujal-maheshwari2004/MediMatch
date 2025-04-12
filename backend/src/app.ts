@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 
+import errorHandler from "./middlewares/errorHandler";
+
 const app = express();
 
 // middlewares
@@ -12,5 +14,8 @@ app.use(cookieParser());
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok" });
 });
+
+// error handling middleware
+app.use(errorHandler);
 
 export default app;
