@@ -1,14 +1,17 @@
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import FAISS
-import os
-def create_and_save_embeddings(chunks, model_name="llama3", save_path="vectorstore"):
+
+def create_and_save_embeddings(doc_chunks, model_name="llama3", output_dir="vectorstore"):
     """
-    Create embeddings from chunks and save to vectorstore
-    Args:
-        chunks (list): List of document chunks
-        model_name (str): Name of the Ollama model to use
-        save_path (str): Path to save the vectorstore
+    Generates vector embeddings from given document chunks using the specified Ollama model
+    and stores them locally with FAISS.
+
+    Parameters:
+        doc_chunks (list): The text segments to be embedded.
+        model_name (str): Identifier for the Ollama embedding model.
+        output_dir (str): Directory to store the resulting FAISS vector index.
     """
-    embeddings = OllamaEmbeddings(model=model_name)
-    vectorstore = FAISS.from_documents(chunks, embeddings)
-    vectorstore.save_local(save_path)
+    # this function make the vector from chunks and keep in faiss
+    embedding_model = OllamaEmbeddings(model=model_name)  # it using model for make embed
+    faiss_index = FAISS.from_documents(doc_chunks, embedding_model)  # it take chunk and model and make vector db
+    faiss_index.save_local(output_dir)  # now saving it local place by output dir
