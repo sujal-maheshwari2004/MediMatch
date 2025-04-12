@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
+import cors from "cors";
 
 import errorHandler from "./middlewares/errorHandler";
 import authRoutes from "./routes/authRoutes";
@@ -9,6 +10,8 @@ import doctorRoutes from "./routes/doctorRoutes";
 import adminRoutes from "./routes/adminRoutes";
 
 const app = express();
+
+app.use(cors({ credentials: true }));
 
 // middlewares
 app.use(express.json());
