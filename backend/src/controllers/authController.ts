@@ -5,6 +5,7 @@ import User from "../models/users";
 import Doctor from "../models/doctors";
 import Admin from "../models/admins";
 import AppError from "../utils/AppError";
+import { signJwt } from "../utils/jwtUtils";
 
 export async function signupService(req: Request, res: Response) {
   try {
@@ -74,7 +75,8 @@ export async function loginService(req: Request, res: Response) {
   const { email, password, role } = req.body;
   try {
     // check if user exists
-    let existingUser: { email: string; password: string } | null = null;
+    let existingUser: { email: string; password: string; name: string } | null =
+      null;
 
     if (role === "user") {
       existingUser = await User.findOne({ email });
@@ -98,6 +100,15 @@ export async function loginService(req: Request, res: Response) {
     if (!isPasswordCorrect) {
       throw new AppError("Invalid password", 401);
     }
+
+    // generate JWT token
+    const token = signJwt({
+      email: existingUser.email,
+      name: existingUser.name,
+      role,
+    });
+
+    res.cookie("token", token, { httpOnly: true, sameSite: "strict" });
 
     res.status(200).json({
       message: "Login successful",
