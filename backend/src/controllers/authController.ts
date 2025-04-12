@@ -121,6 +121,19 @@ export async function loginService(req: Request, res: Response) {
   }
 }
 
+export async function logoutService(req: Request, res: Response) {
+  try {
+    res.clearCookie("token");
+    res.status(200).json({
+      message: "Logout successful",
+    });
+    return;
+  } catch (error) {
+    console.error(error);
+    throw new AppError("Error logging out", 500);
+  }
+}
+
 async function checkUserExists(email: string, role: string): Promise<boolean> {
   let existingUser: { email: string; password: string } | null = null;
 
