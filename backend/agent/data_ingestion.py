@@ -14,10 +14,10 @@ def get_chunks(data_directory="data", chunk_size=1000, chunk_overlap=200):
     Returns:
         list: A list of text chunks.
     """
-    # Create data directory if it doesn't exist
+    # create data folder if not exist, so we dont get error
     os.makedirs(data_directory, exist_ok=True)
 
-    # Load all PDF files from the data directory
+    # load all pdf file from the folder giving
     loader = DirectoryLoader(
         data_directory,
         glob="**/*.pdf",
@@ -25,8 +25,8 @@ def get_chunks(data_directory="data", chunk_size=1000, chunk_overlap=200):
     )
     data = loader.load()
 
-    # Split documents into chunks
+    # now we split big text into small one with overlaping
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     chunks = text_splitter.split_documents(data)
 
-    return chunks
+    return chunks  # finaly we give all chuks back from here
