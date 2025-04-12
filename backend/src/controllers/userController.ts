@@ -9,25 +9,15 @@ import fs from "fs";
 export async function getUserDetails(req: AuthenticatedRequest, res: Response) {
   try {
     const userEmail = req.user?.email;
-    const user = await User.findOne({ email: userEmail });
+    const user = await User.findOne({ email: userEmail }).select(
+      "-password -_id"
+    );
 
     if (!user) {
       throw new AppError("User not found", 404);
     }
 
-    res.status(200).json({
-      name: user.name,
-      age: user.age,
-      gender: user.gender,
-      email: user.email,
-      phone: user.phone,
-      organRequired: user.organRequired,
-      medicalDetails: user.medicalDetails,
-      designatedDoctor: user.designatedDoctor,
-      severityScore: user.severityScore,
-      currentRank: user.currentRank,
-      medicalReports: user.medicalreports,
-    });
+    res.status(200).json({ user });
   } catch (error) {
     throw new AppError("Error in fetching user details", 500);
   }
