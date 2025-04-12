@@ -26,13 +26,13 @@ const AdminSchema: Schema = new Schema({
   approvedDoctors: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Doctor",
+      ref: "doctors",
     },
   ],
   approvedPatients: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Patient",
+      ref: "users",
     },
   ],
 });
