@@ -10,7 +10,7 @@ def main():
 
     # Step 2: make embedings and keep in vector storr
     print("Creating embeddings and saving to vectorstore.....")
-    create_and_save_embeddings(chunks, model_name="llama3", save_path="vectorstore")
+    create_and_save_embeddings(chunks, model_name="llama3", output_dir="vectorstore")
     print("Embeddings saved succesfully.")
 
     # Step 3: now we load the vectorstore back
