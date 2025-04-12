@@ -117,7 +117,7 @@ export async function loginService(req: Request, res: Response) {
     return;
   } catch (error) {
     console.error(error);
-    throw new AppError("Error logging in", 500);
+    throw new AppError("Invalid credentials", 401);
   }
 }
 
