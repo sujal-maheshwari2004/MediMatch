@@ -30,20 +30,27 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   organRequired: {
     type: String,
-    enum: ["kidney", "liver", "heart", "lung"],
+    enum: ["kidney", "liver", "heart", "lung", "NA"],
     required: true,
-    default: null,
+    default: "NA",
   },
   medicalDetails: {
     bloodGroup: {
       type: String,
       required: true,
+      default: "NA",
     },
     bloodPressure: {
       type: String,
       required: true,
+      default: "NA",
     },
     heartAttack: {
       type: Boolean,
@@ -69,13 +76,13 @@ const userSchema = new Schema({
   designatedDoctor: {
     type: Schema.Types.ObjectId,
     ref: "doctors",
-    required: true,
   },
   severityScore: {
     type: Number,
     required: true,
     min: 0,
     max: 100,
+    default: 0,
   },
   currentRank: {
     type: Number,
@@ -85,6 +92,10 @@ const userSchema = new Schema({
   medicalreports: {
     type: [String],
     default: [],
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
   },
   createdAt: {
     type: Date,
