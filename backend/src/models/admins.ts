@@ -19,6 +19,10 @@ const AdminSchema: Schema = new Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: String,
+    required: true,
+  },
   approvedDoctors: [
     {
       type: mongoose.Schema.Types.ObjectId,
