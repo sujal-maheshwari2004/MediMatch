@@ -4,8 +4,9 @@ import Doctor from "../models/doctors";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
 import AppError from "../utils/AppError";
 import path from "path";
-import fs, { appendFile } from "fs";
+import fs from "fs";
 import { UploadedFile } from "express-fileupload";
+import { calculateSeverityScore, updateRankings } from "../utils/calcSeverity";
 
 export async function getDoctorDetails(
   req: AuthenticatedRequest,
@@ -179,16 +180,27 @@ export async function getAIEval(req: AuthenticatedRequest, res: Response) {
       throw new AppError("AI evaluation failed", 500);
     }
 
-    user.medicalDetails = user.medicalDetails || {};
-    user.medicalDetails.heartAttack = aiResult.heart_attack;
-    user.medicalDetails.heartDefectByBirth = aiResult.heart_defect; // Changed from heart_disease to heart_defect
-    user.medicalDetails.heartValve = aiResult.heart_valve;
-    user.medicalDetails.cardiomyopathy = aiResult.cardiomyopathy;
+    user.medicalDetails.bloodPressure = aiResult.bp;
+    user.medicalDetails.heartAttack =
+      aiResult.heart_attack === "Yes" ? true : false;
+    user.medicalDetails.heartDefectByBirth =
+      aiResult.heart_defect === "Yes" ? true : false;
+    user.medicalDetails.heartValve =
+      aiResult.heart_valve === "Yes" ? true : false;
+    user.medicalDetails.cardiomyopathy =
+      aiResult.cardiomyopathy === "Yes" ? true : false;
 
     // save the updated user to the database
     await user.save();
 
     // getting new medical details
+    const newSeverityScore = await calculateSeverityScore(user.email);
+    user.severityScore = newSeverityScore;
+
+    await user.save();
+
+    // Update the rankings
+    await updateRankings();
 
     res.status(200).json({ aiResult });
   } catch (error) {
