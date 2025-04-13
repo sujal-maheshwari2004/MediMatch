@@ -38,6 +38,25 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+  // Check verification status and show/hide verification banner
+  function checkVerificationStatus(userData) {
+    if (!userData.isVerified) {
+      // Show verification banner and overlay
+      document.getElementById("verificationOverlay").style.display = "block";
+      document.getElementById("verificationBanner").style.display = "block";
+      document
+        .getElementById("dashboardContent")
+        .classList.add("dashboard-blurred");
+    } else {
+      // Hide verification banner and overlay if user is verified
+      document.getElementById("verificationOverlay").style.display = "none";
+      document.getElementById("verificationBanner").style.display = "none";
+      document
+        .getElementById("dashboardContent")
+        .classList.remove("dashboard-blurred");
+    }
+  }
+
   // Fetch user data from backend
   async function fetchUserData() {
     try {
@@ -55,7 +74,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const data = await response.json();
-      updateDashboard(data.user);
+
+      // Check verification status
+      checkVerificationStatus(data.user);
+
+      // Update dashboard only if verified
+      if (data.user.isVerified) {
+        updateDashboard(data.user);
+      } else {
+        // Still update basic user info even if not verified
+        document.getElementById("username").textContent =
+          data.user.name || "User";
+        document.getElementById("welcomeUsername").textContent =
+          data.user.name || "User";
+      }
     } catch (error) {
       console.error("Error fetching user data:", error);
     }

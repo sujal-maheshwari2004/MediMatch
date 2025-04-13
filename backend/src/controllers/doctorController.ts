@@ -52,26 +52,15 @@ export async function getUsers(req: AuthenticatedRequest, res: Response) {
 
 export async function getUserDetails(req: AuthenticatedRequest, res: Response) {
   try {
-    const doctorEmail = req.user?.email;
     const userEmail = req.query.email as string;
 
     if (!userEmail) {
       throw new AppError("User email is required", 400);
     }
 
-    const doctor = await Doctor.findOne({ email: doctorEmail });
-    if (!doctor) {
-      throw new AppError("Doctor not found", 404);
-    }
-
     const user = await User.findOne({ email: userEmail }).select("-password");
     if (!user) {
       throw new AppError("User not found", 404);
-    }
-
-    // Check if this user is assigned to the doctor
-    if (!doctor.patients.some((patientId) => patientId.equals(user._id))) {
-      throw new AppError("User is not assigned to this doctor", 403);
     }
 
     res.status(200).json({ user });
@@ -116,5 +105,43 @@ export async function uploadUserFile(req: Request, res: Response) {
   } catch (error) {
     console.error(error);
     throw new AppError("Error uploading file", 500);
+  }
+}
+
+export async function updateMedicalDetails(
+  req: AuthenticatedRequest,
+  res: Response
+) {
+  try {
+    const { email, organRequired, severityScore, medicalDetails } = req.body;
+
+    if (!email) {
+      throw new AppError("Email is required", 400);
+    }
+
+    // Find the patient by email
+    const patient = await User.findOne({ email: email });
+
+    if (!patient) {
+      throw new AppError("Patient not found", 404);
+    }
+
+    // Update patient details
+    patient.organRequired = organRequired;
+    patient.medicalDetails = {
+      ...patient.medicalDetails,
+      ...medicalDetails,
+    };
+
+    await patient.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Medical details updated successfully",
+    });
+    return;
+  } catch (error) {
+    console.error("Error updating medical details:", error);
+    throw new AppError("Error updating medical details", 500);
   }
 }

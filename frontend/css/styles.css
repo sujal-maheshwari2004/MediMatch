@@ -4,12 +4,13 @@ body {
 }
 
 .card {
-  border-radius: 1rem;
+  border-radius: 10px;
   border: none;
 }
 
 .card-body {
   padding: 2rem;
+  border-radius: 10px;
 }
 
 .form-control,
@@ -21,14 +22,22 @@ body {
 .btn-primary {
   padding: 0.75rem;
   border-radius: 0.5rem;
-  background-color: #3a86ff;
-  border-color: #3a86ff;
+  background-color: #007bff;
+  border-color: #007bff;
   font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-  background-color: #2878ff;
-  border-color: #2878ff;
+  background-color: #0069d9;
+  border-color: #0062cc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .text-primary {
@@ -41,4 +50,43 @@ a {
 
 a:hover {
   color: #2878ff;
+}
+
+/* Add these signup form specific styles */
+
+/* Form validation */
+.is-invalid {
+  border-color: #dc3545;
+}
+
+/* Role-specific fields transitions */
+#roleSpecificFields {
+  transition: all 0.3s ease;
+}
+
+/* Error message styling */
+#formErrors {
+  color: #dc3545;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* Success message styling */
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Add some spacing for form groups */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .card-body {
+    padding: 1.5rem !important;
+  }
 }

@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize dashboard data
   function initializeDashboard() {
     fetchDoctorData();
-    fetchPatients();
   }
 
   // Set up event listeners
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         logout();
       });
 
-    // Upload reports button click handler
+    // Upload reports button click handler (only enable if verified)
     document
       .getElementById("uploadReportsBtn")
       .addEventListener("click", function (e) {
@@ -53,6 +52,41 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         uploadReport();
       });
+
+    // Edit medical details button in patient details modal
+    document
+      .getElementById("editMedicalDetailsBtn")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        prepareEditMedicalDetailsModal();
+      });
+
+    // Save medical details button in edit details modal
+    document
+      .getElementById("saveMedicalDetailsBtn")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        saveMedicalDetails();
+      });
+  }
+
+  // Check verification status and show/hide verification banner
+  function checkVerificationStatus(doctorData) {
+    if (!doctorData.isVerified) {
+      // Show verification banner and overlay
+      document.getElementById("verificationOverlay").style.display = "block";
+      document.getElementById("verificationBanner").style.display = "block";
+      document
+        .getElementById("dashboardContent")
+        .classList.add("dashboard-blurred");
+    } else {
+      // Hide verification banner and overlay if doctor is verified
+      document.getElementById("verificationOverlay").style.display = "none";
+      document.getElementById("verificationBanner").style.display = "none";
+      document
+        .getElementById("dashboardContent")
+        .classList.remove("dashboard-blurred");
+    }
   }
 
   // Fetch doctor data from backend
@@ -72,7 +106,17 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const data = await response.json();
+
+      // Check verification status
+      checkVerificationStatus(data.doctor);
+
+      // Update doctor info even if not verified
       updateDoctorInfo(data.doctor);
+
+      // Only fetch patients if doctor is verified
+      if (data.doctor.isVerified) {
+        fetchPatients();
+      }
     } catch (error) {
       console.error("Error fetching doctor data:", error);
     }
@@ -341,6 +385,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
 
+      // Store the current patient email for use by the edit functionality
+      document.getElementById("editPatientEmail").value = patientEmail;
+
       // Show the modal
       const detailsModal = new bootstrap.Modal(
         document.getElementById("patientDetailsModal")
@@ -349,6 +396,130 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
       console.error("Error showing patient details:", error);
       alert("Failed to load patient details. Please try again.");
+    }
+  }
+
+  // Prepare the edit medical details modal with the current patient data
+  function prepareEditMedicalDetailsModal() {
+    // Close the patient details modal
+    const patientEmail = document
+      .getElementById("modalPatientEmail")
+      .textContent.trim();
+
+    const patientDetailsModal = bootstrap.Modal.getInstance(
+      document.getElementById("patientDetailsModal")
+    );
+
+    patientDetailsModal.hide();
+
+    // Fetch latest patient details
+    console.log("Fetching patient details for edit:", patientEmail);
+    fetch(`http://localhost:3000/api/v1/doctor/user?email=${patientEmail}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to fetch patient details");
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Patient data for edit:", data.user);
+        const patient = data.user;
+
+        // Set form values from patient data
+        document.getElementById("editOrganRequired").value =
+          patient.organRequired || "none";
+
+        // Set medical details values
+        const medicalDetails = patient.medicalDetails || {};
+        document.getElementById("editBloodGroup").value =
+          medicalDetails.bloodGroup || "NA";
+        document.getElementById("editBloodPressure").value =
+          medicalDetails.bloodPressure || "NA";
+        document.getElementById("editHeartAttack").checked =
+          medicalDetails.heartAttack || false;
+        document.getElementById("editHeartValve").checked =
+          medicalDetails.heartValve || false;
+        document.getElementById("editHeartDefect").checked =
+          medicalDetails.heartDefectByBirth || false;
+        document.getElementById("editCardiomyopathy").checked =
+          medicalDetails.cardiomyopathy || false;
+
+        // Show the edit modal
+        const editModal = new bootstrap.Modal(
+          document.getElementById("editMedicalDetailsModal")
+        );
+        editModal.show();
+      })
+      .catch((error) => {
+        console.error("Error preparing edit modal:", error);
+        alert("Failed to load patient details for editing. Please try again.");
+      });
+  }
+
+  // Save the medical details to the backend
+  async function saveMedicalDetails() {
+    const patientEmail = document.getElementById("editPatientEmail").value;
+
+    // Get all form values
+    const organRequired = document.getElementById("editOrganRequired").value;
+    const bloodGroup = document.getElementById("editBloodGroup").value;
+    const bloodPressure = document.getElementById("editBloodPressure").value;
+    const heartAttack = document.getElementById("editHeartAttack").checked;
+    const heartValve = document.getElementById("editHeartValve").checked;
+    const heartDefectByBirth =
+      document.getElementById("editHeartDefect").checked;
+    const cardiomyopathy =
+      document.getElementById("editCardiomyopathy").checked;
+
+    // Create request body
+    const requestBody = {
+      email: patientEmail,
+      organRequired: organRequired,
+      medicalDetails: {
+        bloodGroup: bloodGroup,
+        bloodPressure: bloodPressure === "high" ? true : false,
+        heartAttack: heartAttack,
+        heartValve: heartValve,
+        heartDefectByBirth: heartDefectByBirth,
+        cardiomyopathy: cardiomyopathy,
+      },
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/v1/doctor/update-medical-details",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update medical details");
+      }
+
+      // Close the edit modal
+      const editModal = bootstrap.Modal.getInstance(
+        document.getElementById("editMedicalDetailsModal")
+      );
+      editModal.hide();
+
+      // Show success message
+      alert("Medical details updated successfully!");
+
+      // Refresh patient list to reflect changes
+      fetchPatients();
+    } catch (error) {
+      console.error("Error updating medical details:", error);
+      alert("Failed to update medical details. Please try again.");
     }
   }
 

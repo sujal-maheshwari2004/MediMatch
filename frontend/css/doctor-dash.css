@@ -101,3 +101,32 @@
     justify-content: center;
   }
 }
+
+/* Edit Medical Details Styles */
+#editMedicalDetailsForm .form-label {
+  font-weight: 500;
+}
+
+#editMedicalDetailsForm .form-check {
+  margin-bottom: 10px;
+}
+
+#editMedicalDetailsForm .form-switch {
+  padding-left: 2.5em;
+}
+
+#editMedicalDetailsForm .form-range {
+  margin-bottom: 10px;
+}
+
+/* Severity score display */
+#severityScoreValue {
+  font-weight: bold;
+  color: #3a86ff;
+}
+
+@media (max-width: 768px) {
+  #editMedicalDetailsForm .row > div {
+    margin-bottom: 15px;
+  }
+}

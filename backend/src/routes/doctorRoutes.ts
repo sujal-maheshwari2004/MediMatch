@@ -4,6 +4,7 @@ import {
   getDoctorDetails,
   uploadUserFile,
   getUserDetails,
+  updateMedicalDetails,
 } from "../controllers/doctorController";
 import { authAsDoctor, authenicateToken } from "../middlewares/authMiddleware";
 
@@ -215,5 +216,7 @@ router.get("/user", getUserDetails);
  *               $ref: '#/components/schemas/Error'
  */
 router.post("/upload", uploadUserFile);
+
+router.post("/update-medical-details", updateMedicalDetails);
 
 export default router;
