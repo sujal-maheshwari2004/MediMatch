@@ -108,7 +108,7 @@ export async function loginService(req: Request, res: Response) {
       role,
     });
 
-    res.cookie("token", token, { httpOnly: true, sameSite: "strict" });
+    res.cookie("token", token);
 
     res.status(200).json({
       message: "Login successful",

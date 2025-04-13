@@ -50,6 +50,38 @@ export async function getUsers(req: AuthenticatedRequest, res: Response) {
   }
 }
 
+export async function getUserDetails(req: AuthenticatedRequest, res: Response) {
+  try {
+    const doctorEmail = req.user?.email;
+    const userEmail = req.query.email as string;
+
+    if (!userEmail) {
+      throw new AppError("User email is required", 400);
+    }
+
+    const doctor = await Doctor.findOne({ email: doctorEmail });
+    if (!doctor) {
+      throw new AppError("Doctor not found", 404);
+    }
+
+    const user = await User.findOne({ email: userEmail }).select("-password");
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    // Check if this user is assigned to the doctor
+    if (!doctor.patients.some((patientId) => patientId.equals(user._id))) {
+      throw new AppError("User is not assigned to this doctor", 403);
+    }
+
+    res.status(200).json({ user });
+    return;
+  } catch (error) {
+    console.error(error);
+    throw new AppError("Error fetching user details", 500);
+  }
+}
+
 export async function uploadUserFile(req: Request, res: Response) {
   try {
     const userEmail = req.body.userEmail;

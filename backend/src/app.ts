@@ -12,7 +12,7 @@ import { setupSwagger } from "./utils/swagger";
 
 const app = express();
 
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: "http://localhost:5500" }));
 
 // middlewares
 app.use(express.json());

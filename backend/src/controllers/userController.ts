@@ -100,3 +100,40 @@ export async function getUserDocuments(
     throw new AppError("Error in fetching user documents", 500);
   }
 }
+
+export async function getAssignedDoctor(
+  req: AuthenticatedRequest,
+  res: Response
+) {
+  try {
+    const userEmail = req.user?.email;
+    const user = await User.findOne({ email: userEmail });
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    if (!user.designatedDoctor) {
+      res.status(200).json({
+        message: "No doctor assigned",
+        doctor: null,
+      });
+      return;
+    }
+
+    const doctor = await Doctor.findById(user.designatedDoctor);
+    if (!doctor) {
+      throw new AppError("Doctor not found", 404);
+    }
+
+    res.status(200).json({
+      doctor: {
+        name: doctor.name,
+        email: doctor.email,
+        phone: doctor.phone,
+      },
+    });
+  } catch (error) {
+    throw new AppError("Error in fetching assigned doctor", 500);
+  }
+}

@@ -1,0 +1,112 @@
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 15px;
+}
+
+.dashboard-header {
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 20px;
+}
+
+.app-title {
+  color: #3a86ff;
+  margin-bottom: 0;
+}
+
+.nav-links a {
+  color: #495057;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0 10px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #3a86ff;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.user-avatar img,
+.doctor-avatar img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.welcome-card,
+.doctor-card,
+.status-card,
+.reports-card {
+  border-radius: 10px;
+  border: none;
+}
+
+.doctor-profile {
+  display: flex;
+  align-items: center;
+}
+
+.doctor-info {
+  font-size: 0.9rem;
+}
+
+.status-item {
+  text-align: center;
+  padding: 15px 10px;
+}
+
+.status-item h5 {
+  color: #6c757d;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.status-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #3a86ff;
+}
+
+.reports-card .card-header {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.reports-card .table th {
+  font-weight: 600;
+  color: #495057;
+}
+
+.view-btn {
+  background-color: #3a86ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.view-btn:hover {
+  background-color: #2878ff;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header .col-md-3,
+  .dashboard-header .col-md-6 {
+    text-align: center !important;
+    margin-bottom: 10px;
+  }
+
+  .user-profile {
+    justify-content: center;
+  }
+
+  .status-item {
+    margin-bottom: 20px;
+  }
+}
