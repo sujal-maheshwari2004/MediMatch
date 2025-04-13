@@ -8,6 +8,7 @@ import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import doctorRoutes from "./routes/doctorRoutes";
 import adminRoutes from "./routes/adminRoutes";
+import { setupSwagger } from "./utils/swagger";
 
 const app = express();
 
@@ -18,6 +19,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(cookieParser());
+
+// Setup Swagger
+setupSwagger(app);
 
 // routes
 app.get("/", (req: Request, res: Response) => {

@@ -1,10 +1,19 @@
+/**
+ * Custom application error class
+ */
 class AppError extends Error {
   status: number;
 
-  constructor(message: string, status: number = 500) {
+  /**
+   * Create a new AppError
+   * @param message Error message
+   * @param status HTTP status code
+   */
+  constructor(message: string, status: number) {
     super(message);
     this.status = status;
-    this.name = "AppError";
+    this.name = this.constructor.name;
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
