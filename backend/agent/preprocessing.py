@@ -1,7 +1,7 @@
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import FAISS
 
-def create_and_save_embeddings(doc_chunks, model_name="llama3", output_dir="vectorstore"):
+def create_and_save_embeddings(doc_chunks, model_name="llama3.2", output_dir="vectorstore"):
     """
     Generates vector embeddings from given document chunks using the specified Ollama model
     and stores them locally with FAISS.

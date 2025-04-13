@@ -10,12 +10,12 @@ def main():
 
     # Step 2: make embedings and keep in vector storr
     print("Creating embeddings and saving to vectorstore.....")
-    create_and_save_embeddings(chunks, model_name="llama3", output_dir="vectorstore")
+    create_and_save_embeddings(chunks, model_name="llama3.2", output_dir="vectorstore")
     print("Embeddings saved succesfully.")
 
     # Step 3: now we load the vectorstore back
     print("Loading vectorstore.....")
-    vectorstore = load_vectorstore(model_name="llama2", vectorstore_path="vectorstore")
+    vectorstore = load_vectorstore(model_name="llama3.2", vectorstore_path="vectorstore")
     print("Vectorstore loaded succesfully.")
 
     # Step 4: taking all the question from json file
@@ -25,7 +25,7 @@ def main():
 
     # Step 5: start the llm model
     print("Initializing LLM.....")
-    llm = initialize_llm(model_name="llama2", temperature=0.1, max_tokens=100)
+    llm = initialize_llm(model_name="llama3.2", temperature=0.1, max_tokens=100)
     print("LLM initialized succesfully.")
 
     # Step 6: ask all que for selected organ
@@ -39,5 +39,4 @@ def main():
     save_responses(responses, output_filepath="heart_answers.json")
     print("Responses saved succesfully.")
 
-if __name__ == "__main__":
-    main()
+    return responses
