@@ -61,6 +61,28 @@ document.addEventListener("DOMContentLoaded", function () {
         prepareEditMedicalDetailsModal();
       });
 
+    document
+      .getElementById("aiEvalBtn")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        const userEmail = document
+          .getElementById("modalPatientEmail")
+          .textContent.trim();
+
+        fetch(
+          `http://localhost:3000/api/v1/doctor/get-ai-eval?email=${userEmail}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include", // Include cookies for authentication
+          }
+        );
+
+        alert("AI evaluation request sent successfully!");
+      });
+
     // Save medical details button in edit details modal
     document
       .getElementById("saveMedicalDetailsBtn")
