@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediMatch - Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/admin-dash.css" />
+  </head>
+  <body>
+    <div class="container-fluid dashboard-container">
+      <header class="dashboard-header">
+        <div class="row align-items-center">
+          <div class="col-md-3">
+            <h2 class="fw-bold app-title">Medi Match</h2>
+          </div>
+          <div class="col-md-6 text-center">
+            <nav class="nav-links">
+              <a href="#" class="active">Home</a> |
+              <a href="approve-registrations.html">Approve New Registrations</a>
+              |
+              <a href="#" id="logoutBtn">Logout</a>
+            </nav>
+          </div>
+          <div class="col-md-3 text-end">
+            <div class="user-profile">
+              <div class="user-avatar">
+                <img
+                  src="../wireframes/boy.png"
+                  alt="Admin"
+                  class="rounded-circle"
+                />
+              </div>
+              <span id="username" class="ms-2">User Name</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="welcome-card card shadow-sm mb-4">
+            <div class="card-body">
+              <h3>Hello <span id="welcomeUsername">Username</span></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <div class="rankings-card card shadow-sm">
+            <div
+              class="card-header bg-white d-flex justify-content-between align-items-center"
+            >
+              <h4>Current Rankings</h4>
+              <div class="search-box">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="searchInput"
+                  placeholder="Search"
+                />
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Rank</th>
+                      <th scope="col">Patient Name</th>
+                      <th scope="col">Assigned Doctor</th>
+                      <th scope="col">Severity Score</th>
+                      <th scope="col">View Medical Details/Reports</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rankingsTableBody">
+                    <!-- Users will be populated here dynamically -->
+                  </tbody>
+                </table>
+              </div>
+              <div id="noUsers" class="text-center d-none">
+                <p>No users available.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Medical Details Modal -->
+    <div
+      class="modal fade"
+      id="userDetailsModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Patient Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Patient Info</h4>
+                <p>
+                  <strong>Name:</strong> <span id="modalPatientName"></span>
+                </p>
+                <p>
+                  <strong>Email:</strong> <span id="modalPatientEmail"></span>
+                </p>
+                <p>
+                  <strong>Phone:</strong> <span id="modalPatientPhone"></span>
+                </p>
+              </div>
+              <div class="col-md-6">
+                <h4>Medical Details</h4>
+                <p>
+                  <strong>Organ Required:</strong>
+                  <span id="modalOrganRequired"></span>
+                </p>
+                <p>
+                  <strong>Blood Group:</strong>
+                  <span id="modalBloodGroup"></span>
+                </p>
+                <p>
+                  <strong>Blood Pressure:</strong>
+                  <span id="modalBloodPressure"></span>
+                </p>
+                <p>
+                  <strong>Heart Attack:</strong>
+                  <span id="modalHeartAttack"></span>
+                </p>
+                <p>
+                  <strong>Heart Valve:</strong>
+                  <span id="modalHeartValve"></span>
+                </p>
+                <p>
+                  <strong>Heart Defect by Birth:</strong>
+                  <span id="modalHeartDefectByBirth"></span>
+                </p>
+                <p>
+                  <strong>Cardiomyopathy:</strong>
+                  <span id="modalCardiomyopathy"></span>
+                </p>
+              </div>
+            </div>
+            <hr />
+            <div class="row mt-3">
+              <div class="col-12">
+                <h4>Medical Reports</h4>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>Report Name</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="modalReportsTableBody">
+                      <!-- Reports will be added dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+                <div id="modalNoReports" class="text-center d-none">
+                  <p>No medical reports available.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../js/admin-dash.js"></script>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 15px;
+}
+
+.dashboard-header {
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+  margin-bottom: 20px;
+}
+
+.app-title {
+  color: #3a86ff;
+  margin-bottom: 0;
+}
+
+.nav-links a {
+  color: #495057;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0 10px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #3a86ff;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.user-avatar img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.welcome-card,
+.upload-card,
+.patients-card {
+  border-radius: 10px;
+  border: none;
+}
+
+.patients-card .card-header {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.patients-card .table th {
+  font-weight: 600;
+  color: #495057;
+}
+
+.view-reports-btn,
+.view-details-btn {
+  background-color: #3a86ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-right: 5px;
+}
+
+.view-reports-btn:hover,
+.view-details-btn:hover {
+  background-color: #2878ff;
+}
+
+#uploadReportsBtn {
+  padding: 10px 20px;
+  font-weight: 500;
+}
+
+.severity-high {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.severity-medium {
+  color: #fd7e14;
+  font-weight: bold;
+}
+
+.severity-low {
+  color: #198754;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header .col-md-3,
+  .dashboard-header .col-md-6 {
+    text-align: center !important;
+    margin-bottom: 10px;
+  }
+
+  .user-profile {
+    justify-content: center;
+  }
+}
+
+/* Edit Medical Details Styles */
+#editMedicalDetailsForm .form-label {
+  font-weight: 500;
+}
+
+#editMedicalDetailsForm .form-check {
+  margin-bottom: 10px;
+}
+
+#editMedicalDetailsForm .form-switch {
+  padding-left: 2.5em;
+}
+
+#editMedicalDetailsForm .form-range {
+  margin-bottom: 10px;
+}
+
+/* Severity score display */
+#severityScoreValue {
+  font-weight: bold;
+  color: #3a86ff;
+}
+
+@media (max-width: 768px) {
+  #editMedicalDetailsForm .row > div {
+    margin-bottom: 15px;
+  }
+}

@@ -3,6 +3,8 @@ import {
   getUsers,
   getDoctorDetails,
   uploadUserFile,
+  getUserDetails,
+  updateMedicalDetails,
 } from "../controllers/doctorController";
 import { authAsDoctor, authenicateToken } from "../middlewares/authMiddleware";
 
@@ -93,6 +95,64 @@ router.get("/users", getUsers);
 
 /**
  * @swagger
+ * /api/v1/doctor/user:
+ *   get:
+ *     summary: Get details of a specific patient assigned to the doctor
+ *     tags: [Doctor]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: email
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Email of the patient
+ *     responses:
+ *       200:
+ *         description: User details fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       400:
+ *         description: User email not provided
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       401:
+ *         description: Unauthorized - Not authenticated or not a doctor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       403:
+ *         description: User not assigned to this doctor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Doctor or user not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get("/user", getUserDetails);
+
+/**
+ * @swagger
  * /api/v1/doctor/upload:
  *   post:
  *     summary: Upload a medical file for a user
@@ -156,5 +216,7 @@ router.get("/users", getUsers);
  *               $ref: '#/components/schemas/Error'
  */
 router.post("/upload", uploadUserFile);
+
+router.post("/update-medical-details", updateMedicalDetails);
 
 export default router;

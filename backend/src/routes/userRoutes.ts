@@ -2,6 +2,7 @@ import Router from "express";
 import {
   getUserDetails,
   updateAssignedDoctor,
+  getAssignedDoctor,
 } from "../controllers/userController";
 import { authAsUser, authenicateToken } from "../middlewares/authMiddleware";
 
@@ -48,6 +49,8 @@ router.use(authAsUser);
  *               $ref: '#/components/schemas/Error'
  */
 router.get("/", getUserDetails);
+
+router.get("/doctor", getAssignedDoctor);
 
 /**
  * @swagger
