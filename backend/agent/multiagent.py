@@ -3,7 +3,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import ChatPromptTemplate
 import json
 
-def load_vectorstore(model_name="llama2", vectorstore_path="vectorstore"):
+def load_vectorstore(model_name="llama3.2", vectorstore_path="vectorstore"):
     """
     Load the FAISS vectorstore and embeddings.
     """
@@ -26,7 +26,7 @@ def load_questions(filepath="questionset.json"):
     with open(filepath) as f:
         return json.load(f)
 
-def initialize_llm(model_name="llama2", temperature=0.1, max_tokens=100):
+def initialize_llm(model_name="llama3.2", temperature=0.1, max_tokens=100):
     """
     Initialize the ChatOllama LLM.
     """

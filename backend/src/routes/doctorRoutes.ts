@@ -5,6 +5,7 @@ import {
   uploadUserFile,
   getUserDetails,
   updateMedicalDetails,
+  getAIEval,
 } from "../controllers/doctorController";
 import { authAsDoctor, authenicateToken } from "../middlewares/authMiddleware";
 
@@ -218,5 +219,7 @@ router.get("/user", getUserDetails);
 router.post("/upload", uploadUserFile);
 
 router.post("/update-medical-details", updateMedicalDetails);
+
+router.get("/get-ai-eval", getAIEval);
 
 export default router;

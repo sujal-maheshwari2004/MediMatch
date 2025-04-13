@@ -1,0 +1,7 @@
+langchain
+langchain-community
+PyMuPDF
+ollama
+pandas
+numpy
+streamlit

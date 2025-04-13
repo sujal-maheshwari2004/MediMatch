@@ -6,6 +6,7 @@ import AppError from "../utils/AppError";
 import path from "path";
 import fs from "fs";
 import { UploadedFile } from "express-fileupload";
+import { calculateSeverityScore, updateRankings } from "../utils/calcSeverity";
 
 export async function getDoctorDetails(
   req: AuthenticatedRequest,
@@ -143,5 +144,67 @@ export async function updateMedicalDetails(
   } catch (error) {
     console.error("Error updating medical details:", error);
     throw new AppError("Error updating medical details", 500);
+  }
+}
+
+export async function getAIEval(req: AuthenticatedRequest, res: Response) {
+  try {
+    const { email } = req.query;
+
+    if (!email) {
+      throw new AppError("User email is required", 400);
+    }
+
+    const user = await User.findOne({ email });
+    if (!user || !user.medicalDetails) {
+      throw new AppError("User not found", 404);
+    }
+
+    const requestData = {
+      email: email,
+      organRequired: user.organRequired || "heart",
+    };
+
+    // Call the Flask API
+    const response = await fetch("http://localhost:3001/eval", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    const aiResult = await response.json();
+
+    if (!response.ok) {
+      throw new AppError("AI evaluation failed", 500);
+    }
+
+    user.medicalDetails.bloodPressure = aiResult.bp;
+    user.medicalDetails.heartAttack =
+      aiResult.heart_attack === "Yes" ? true : false;
+    user.medicalDetails.heartDefectByBirth =
+      aiResult.heart_defect === "Yes" ? true : false;
+    user.medicalDetails.heartValve =
+      aiResult.heart_valve === "Yes" ? true : false;
+    user.medicalDetails.cardiomyopathy =
+      aiResult.cardiomyopathy === "Yes" ? true : false;
+
+    // save the updated user to the database
+    await user.save();
+
+    // getting new medical details
+    const newSeverityScore = await calculateSeverityScore(user.email);
+    user.severityScore = newSeverityScore;
+
+    await user.save();
+
+    // Update the rankings
+    await updateRankings();
+
+    res.status(200).json({ aiResult });
+  } catch (error) {
+    console.error("Error in AI evaluation:", error);
+    throw new AppError("Unknown error in AI evaluation", 500);
   }
 }

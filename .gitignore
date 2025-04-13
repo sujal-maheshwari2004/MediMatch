@@ -137,3 +137,7 @@ dist
 
 # user uploaded files
 userUploads/
+
+# python
+.venv/
+__pycache__/
