@@ -119,3 +119,54 @@ export async function updateVerification(
     throw new AppError("Error updating verification", 500);
   }
 }
+
+export async function getAllUsers(req: AuthenticatedRequest, res: Response) {
+  try {
+    // Find all verified users
+    const users = await User.find({ isVerified: true })
+      .select("-password -__v")
+      .populate({
+        path: "designatedDoctor",
+        select: "name email phone department -_id",
+      });
+
+    res.status(200).json({
+      success: true,
+      users: users,
+    });
+    return;
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    throw new AppError("Error fetching all users", 500);
+  }
+}
+
+export async function getUserDetails(req: AuthenticatedRequest, res: Response) {
+  try {
+    const userEmail = req.query.email as string;
+
+    if (!userEmail) {
+      throw new AppError("User email is required", 400);
+    }
+
+    const user = await User.findOne({ email: userEmail })
+      .select("-password")
+      .populate({
+        path: "designatedDoctor",
+        select: "name email phone department -_id",
+      });
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    res.status(200).json({
+      success: true,
+      user: user,
+    });
+    return;
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    throw new AppError("Error fetching user details", 500);
+  }
+}

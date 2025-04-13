@@ -3,6 +3,8 @@ import {
   getNewRegistrations,
   updateVerification,
   getAdminDetails,
+  getAllUsers,
+  getUserDetails,
 } from "../controllers/adminController";
 import { authenicateToken, authAsAdmin } from "../middlewares/authMiddleware";
 
@@ -164,5 +166,92 @@ router.get("/newRegistrations", getNewRegistrations);
  *               $ref: '#/components/schemas/Error'
  */
 router.post("/updateVerification", updateVerification);
+
+/**
+ * @swagger
+ * /api/v1/admin/allUsers:
+ *   get:
+ *     summary: Get all verified users
+ *     tags: [Admin]
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Users fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 users:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized - Not authenticated or not an admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get("/allUsers", getAllUsers);
+
+/**
+ * @swagger
+ * /api/v1/admin/user:
+ *   get:
+ *     summary: Get specific user details
+ *     tags: [Admin]
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: email
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user email
+ *     responses:
+ *       200:
+ *         description: User details fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized - Not authenticated or not an admin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get("/user", getUserDetails);
 
 export default router;

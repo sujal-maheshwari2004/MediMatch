@@ -44,6 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "pages/patient-dash.html";
       } else if (role === "doctor") {
         window.location.href = "pages/doctor-dash.html";
+      } else if (role === "admin") {
+        window.location.href = "pages/admin-dash.html";
       } else {
         // For admin role, use the original redirect
         window.location.href = `pages/success.html?role=${role}`;
