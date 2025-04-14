@@ -19,7 +19,8 @@ MediMatch is an innovative AI-powered organ transplant prioritization system tha
 
 MediMatch addresses these challenges through:
 
-1. **AI-Powered Severity Assessment**: 
+1. **AI-Powered Severity Assessment**:
+
    - Analyzes patient medical reports using Generative AI
    - Automatically generates severity scores based on current health conditions
    - Continuously updates patient priority in real-time
@@ -32,12 +33,14 @@ MediMatch addresses these challenges through:
 ## ✨ Key Features
 
 ### For Healthcare Providers 👨‍⚕️
+
 - **Report Upload Interface**: Easily upload patient medical reports
 - **AI Analysis Dashboard**: View AI-generated severity assessments
 - **Priority Tracking**: Monitor patient positions on waiting lists
 - **Real-time Updates**: Instant notifications for priority changes
 
 ### For Transplant Centers 🏥
+
 - **Priority List Management**: AI-driven waiting list organization
 - **Patient Status Overview**: Comprehensive view of all listed patients
 - **Automated Prioritization**: Smart queuing based on severity scores
@@ -45,18 +48,21 @@ MediMatch addresses these challenges through:
 - **Emergency Alerts**: Immediate notification for critical cases
 
 ### AI Capabilities 🤖
+
 - **Report Analysis**: Advanced GenAI processing of medical reports
 - **Severity Scoring**: Complex evaluation of patient conditions
 - **Priority Calculation**: Algorithmic determination of waiting list position
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: 
+- **Frontend**:
+
   - JavaScript for client-side logic
-  - HTML, CSS and Bootstrap  user interface
+  - HTML, CSS and Bootstrap user interface
 
 - **Backend**:
-  - Node.js and Express.js main server 
+
+  - Node.js and Express.js main server
   - Python for operations and AI processing
   - MongoDB for storing patient and doctors records
   - Secure API endpoints for sensitive medical data
@@ -73,11 +79,13 @@ MediMatch addresses these challenges through:
 ## 🚀 Getting Started
 
 1. Clone the repository
+
 ```bash
 git clone https://github.com/satwikkaushik/MediMatch.git
 ```
 
 2. Install dependencies
+
 ```bash
 
 # Backend dependencies
@@ -90,12 +98,14 @@ pip install -r requirements.txt
 ```
 
 3. Configure environment variables
+
 ```bash
 cp .env.example .env
 # Add your configuration details
 ```
 
 4. Run the application
+
 ```bash
 # Start frontend
 npm start
@@ -108,7 +118,9 @@ python app.py
 
 <div align="center">
   <a href="https://youtu.be/yamayZwaPnc?si=NqSSQ1kXunoEFqr0" target="_blank">
-    <img src="home-page.png" alt="MediMatch Login Page" width="600px">
+    <img src="screenshots/patient.png" alt="MediMatch Patient Page" width="600px">
+    <br>
+    <img src="screenshots/doctor.png" alt="MediMatch Doctor Page" width="600px">
   </a>
 </div>
 
@@ -121,6 +133,7 @@ python app.py
 ## 🤝 Contributing
 
 We welcome contributions to improve MediMatch! Please:
+
 1. Fork the repository
 2. Create a feature branch
 3. Commit your changes
@@ -132,6 +145,7 @@ We welcome contributions to improve MediMatch! Please:
 - **Backend Developed by**: [Satwik Kaushik](https://github.com/satwikkaushik)
 - **AI/ML Developed by**: [Sujal Maheshwari](https://github.com/sujal-maheshwari2004)
 - **Frontend Developed by**: [Khushi Kumari Jha](https://github.com/khushijha-kj)
+
 ---
 
 <div align="center">
