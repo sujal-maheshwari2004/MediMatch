@@ -118,9 +118,9 @@ python app.py
 
 <div align="center">
   <a href="https://youtu.be/yamayZwaPnc?si=NqSSQ1kXunoEFqr0" target="_blank">
-    <img src="screenshots/patient.png" alt="MediMatch Patient Page" width="600px">
+    <img src="screenshots/patient.png" alt="MediMatch Patient Page" width="850px">
     <br>
-    <img src="screenshots/doctor.png" alt="MediMatch Doctor Page" width="600px">
+    <img src="screenshots/doctor.png" alt="MediMatch Doctor Page" width="850px">
   </a>
 </div>
 
