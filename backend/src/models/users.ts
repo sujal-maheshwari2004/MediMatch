@@ -37,7 +37,7 @@ const userSchema = new Schema({
   },
   organRequired: {
     type: String,
-    enum: ["kidney", "liver", "heart", "lung", "NA"],
+    enum: ["kidney", "liver", "Heart", "lung", "NA"],
     required: true,
     default: "NA",
   },

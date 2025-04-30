@@ -114,15 +114,12 @@ npm start
 python app.py
 ```
 
-## 📱 Demo
+## 📱 Preview
 
-<div align="center">
-  <a href="https://youtu.be/yamayZwaPnc?si=NqSSQ1kXunoEFqr0" target="_blank">
-    <img src="screenshots/patient.png" alt="MediMatch Patient Page" width="850px">
-    <br>
-    <img src="screenshots/doctor.png" alt="MediMatch Doctor Page" width="850px">
-  </a>
-</div>
+<img src="media_for_readme/patient-signup.gif" width=800>
+<img src="media_for_readme/admin-approval.gif" width=800>
+<img src="media_for_readme/doctor-dash.gif" width=800>
+<img src="media_for_readme/patient-dash.gif" width=800>
 
 <div align="center">
   <a href="https://youtu.be/yamayZwaPnc?si=NqSSQ1kXunoEFqr0" target="_blank">
